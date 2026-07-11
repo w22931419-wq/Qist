@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پاکستانی سرکاری سکیمیں اور سہولیات پورٹل</title>
+    <!-- گوگل فونٹس برائے اردو -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Arabic:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00d26a;
+            --white: #FFFFFF;
+            --black: #000000;
+            --gray: #333333;
+            --light-gray: #f4f4f4;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            padding-bottom: 80px; /* Space for fixed bottom nav */
+        }
+
+        /* ہیڈر ڈیزائن */
+        header {
+            padding: 20px;
+            text-align: center;
+            background: var(--white);
+            border-bottom: 1px solid #eee;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        /* ایڈ یونٹ کے لیے سٹائل */
+        .ad-space {
+            margin: 15px auto;
+            text-align: center;
+            min-height: 90px;
+            background: #fafafa;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* بٹن سٹائل */
+        .btn-green {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-green:active {
+            transform: scale(0.95);
+        }
+
+        /* کارڈ سٹائل */
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid #f0f0f0;
+        }
+
+        .featured-card {
+            border: 2px solid var(--primary-green);
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--primary-green);
+            color: white;
+            padding: 2px 15px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        /* فلٹر اور سرچ */
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-green);
+            background: white;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* فکسڈ باٹم نیویگیشن */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        /* سیکشنز کو چھپانا */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* سکیم کارڈ کی تفصیلات */
+        .scheme-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .meta-tag {
+            background: #eefdf5;
+            padding: 2px 10px;
+            border-radius: 5px;
+            color: #008a46;
+        }
+
+        .scheme-desc {
+            color: var(--gray);
+            margin: 10px 0;
+            font-size: 15px;
+        }
+
+        /* فوٹر */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fafafa;
+            margin-top: 30px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* واٹس ایپ بٹن */
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        /* ہیلپ لائن بٹن */
+        .helpline-btn {
+            background: #000;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🇵🇰 سرکاری سکیمیں پورٹل</h1>
+    </header>
+
+    <div class="container">
+        
+        <!-- یہاں اپنا Google AdSense یا Monetag کا ایڈ کوڈ لگائیں (Top Ad) -->
+        <div class="ad-space">
+            <p style="color:#ccc">اشتہار کی جگہ (Ad Space)</p>
+        </div>
+
+        <!-- ہوم پیج سیکشن -->
+        <section id="home" class="page-section active">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-size: 22px;">خوش آمدید! تمام سرکاری سہولیات اب ایک جگہ</h2>
+                <p style="color: var(--gray);">ہم آپ کو پاکستان کی تمام صوبائی اور وفاقی سکیموں کی درست معلومات فراہم کرتے ہیں۔</p>
+            </div>
+
+            <h3>آج کی نمایاں سکیم ✨</h3>
+            <div class="card featured-card" id="featuredScheme">
+                <!-- جے ایس کے ذریعے بھرا جائے گا -->
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-green" onclick="showPage('schemes')">تمام سکیمیں دیکھیں</button>
+            </div>
+        </section>
+
+        <!-- سکیمیں پیج سیکشن -->
+        <section id="schemes" class="page-section">
+            <h2 style="margin-bottom: 15px;">تمام سرکاری سکیمیں 📋</h2>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="سکیم کا نام یا صوبہ تلاش کریں..." onkeyup="filterSchemes()">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="setFilter('تمام', this)">تمام</button>
+                    <button class="filter-btn" onclick="setFilter('پنجاب', this)">پنجاب</button>
+                    <button class="filter-btn" onclick="setFilter('سندھ', this)">سندھ</button>
+                    <button class="filter-btn" onclick="setFilter('خیبر پختونخوا', this)">کے پی کے</button>
+                    <button class="filter-btn" onclick="setFilter('بلوچستان', this)">بلوچستان</button>
+                    <button class="filter-btn" onclick="setFilter('وفاقی', this)">وفاقی</button>
+                </div>
+            </div>
+
+            <div id="schemesList">
+                <!-- سکیم کارڈز یہاں لوڈ ہوں گے -->
+            </div>
+        </section>
+
+        <!-- سہولیات پیج سیکشن -->
+        <section id="facilities" class="page-section">
+            <h2 style="margin-bottom: 20px;">اہم سرکاری سہولیات 🛠️</h2>
+            <div id="facilitiesList">
+                <!-- سہولیات یہاں لوڈ ہوں گی -->
+            </div>
+        </section>
+
+        <!-- تعارف پیج سیکشن -->
+        <section id="about" class="page-section">
+            <div class="card">
+                <h2>ہمارے بارے میں ℹ️</h2>
+                <p style="margin-top: 15px;">ہماری ویب سائٹ عوام کے لیے سرکاری معلومات کا ایک شفاف اور بہترین ذریعہ ہے۔ ہم اس پر یقین رکھتے ہیں کہ ہر پاکستانی کو سرکاری سہولیات کی معلومات ملنی چاہیے۔</p>
+                <p style="margin-top: 10px;">پاکستان میں اکثر شہری معلومات نہ ہونے کی وجہ سے ان قیمتی سکیموں سے فائدہ نہیں اٹھا پاتے جو ان کے لیے ہی بنائی گئی ہیں۔ ہمارا مقصد تمام صوبوں (پنجاب، سندھ، خیبر پختونخوا، بلوچستان) اور وفاقی حکومت کی جانب سے جاری کردہ سکیموں، جیسے کہ صحت کارڈ، راشن پروگرام، تعلیمی وظائف، اور کسانوں کے لیے مالی امداد کی معلومات کو ایک سادہ اور قابلِ فہم انداز میں فراہم کرنا ہے۔</p>
+                <p style="margin-top: 10px;">ہماری ٹیم ہر سکیم کی سرکاری ویب سائٹ سے ڈیٹا اکٹھا کرتی ہے تاکہ آپ کو لنک تلاش کرنے میں کوئی پریشانی نہ ہو۔ ہم ہر وقت اپنے ڈیٹا بیس کو اپ ڈیٹ رکھتے ہیں تاکہ نئی تاریخوں اور بدلتی ہوئی شرائط سے آپ باخبر رہ سکیں۔</p>
+            </div>
+        </section>
+
+        <!-- رابطہ پیج سیکشن -->
+        <section id="contact" class="page-section">
+            <div class="card">
+                <h2>رابطہ کریں 📞</h2>
+                <p>اگر آپ کا کوئی سوال ہے یا آپ کو کسی سکیم کے بارے میں رہنمائی چاہیے، تو ہمیں پیغام بھیجیں۔</p>
+                
+                <form style="margin-top: 20px;" onsubmit="event.preventDefault();">
+                    <div style="margin-bottom: 15px;">
+                        <label>آپ کا نام</label>
+                        <input type="text" id="contactName" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; margin-top: 5px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label>فون نمبر</label>
+                        <input type="number" id="contactPhone" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; margin-top: 5px;">
+                    </div>
+                    <a href="https://wa.me/923000000000?text=سلام، مجھے سرکاری سکیموں کے بارے میں معلومات چاہیے۔" class="whatsapp-btn">
+                        واٹس ایپ کے ذریعے رابطہ کریں
+                    </a>
+                </form>
+            </div>
+        </section>
+
+        <!-- یہاں اپنا Google AdSense یا Monetag کا ایڈ کوڈ لگائیں (Bottom Ad) -->
+        <div class="ad-space">
+            <p style="color:#ccc">اشتہار کی جگہ (Ad Space)</p>
+        </div>
+
+    </div>
+
+    <!-- فوٹر -->
+    <footer>
+        <p>جملہ حقوق محفوظ ہیں۔ &copy; 2026</p>
+        <p style="margin-top: 10px; font-size: 11px;">نوٹ: یہ ایک غیر سرکاری معلوماتی ویب سائٹ ہے جو عوام کی سہولت کے لیے سرکاری معلومات فراہم کرتی ہے۔ ہمارا کسی بھی سرکاری ادارے سے براہ راست تعلق نہیں ہے۔</p>
+    </footer>
+
+    <!-- نیویگیشن بار -->
+    <nav class="bottom-nav">
+        <a href="javascript:void(0)" class="nav-item active" onclick="showPage('home', this)">🏠<br>ہوم</a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showPage('schemes', this)">📜<br>سکیمیں</a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showPage('facilities', this)">🛠️<br>سہولیات</a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showPage('about', this)">ℹ️<br>تعارف</a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showPage('contact', this)">📞<br>رابطہ</a>
+    </nav>
+
+    <script>
+        // 50 سکیموں کا ڈیٹا
+        const schemesData = [
+            // وفاقی (10)
+            { id: 1, name: "بینظیر انکم سپورٹ پروگرام (BISP)", prov: "وفاقی", dist: "تمام پاکستان", amount: "10,500 روپے سہ ماہی", link: "https://bisp.gov.pk", helpline: "0800-26477", date: "جاری ہے", desc: "مستحق خواتین کے لیے مالی امداد کا سب سے بڑا پروگرام جس کا مقصد غربت کا خاتمہ ہے۔" },
+            { id: 2, name: "وزیراعظم یوتھ بزنس لون", prov: "وفاقی", dist: "تمام پاکستان", amount: "5 لاکھ سے 75 لاکھ قرض", link: "https://pmyp.gov.pk", helpline: "051-9204429", date: "31 دسمبر 2026", desc: "نوجوانوں کو اپنا کاروبار شروع کرنے کے لیے آسان شرائط پر بلاسود اور کم سود پر قرضے فراہم کیے جاتے ہیں۔" },
+            { id: 3, name: "احساس تعلیمی وظائف", prov: "وفاقی", dist: "تمام پاکستان", amount: "4,000 روپے تک ماہانہ", link: "https://8171.pass.gov.pk", helpline: "0800-26477", date: "تعلیمی سال 2026", desc: "سکول اور کالج جانے والے بچوں کے لیے مالی امداد تاکہ وہ اپنی تعلیم جاری رکھ سکیں۔" },
+            { id: 4, name: "پی ایم فری لیپ ٹاپ سکیم", prov: "وفاقی", dist: "تمام پاکستان", amount: "مفت لیپ ٹاپ", link: "https://laptop.pmyp.gov.pk", helpline: "051-111-111-432", date: "اکتوبر 2026", desc: "یونیورسٹی کے ذہین طلبہ کے لیے مفت لیپ ٹاپ کی فراہمی تاکہ وہ ڈیجیٹل دور میں آگے بڑھ سکیں۔" },
+            { id: 5, name: "قومی بچت سکیم (بہبود)", prov: "وفاقی", dist: "تمام پاکستان", amount: "ماہانہ منافع", link: "https://savings.gov.pk", helpline: "051-9215741", date: "لائف ٹائم", desc: "بزرگ شہریوں اور بیواؤں کے لیے محفوظ سرمایہ کاری اور ماہانہ منافع کی سہولت۔" },
+            { id: 6, name: "پی ایم ہیلتھ کارڈ (وفاقی)", prov: "وفاقی", dist: "اسلام آباد، گلگت", amount: "10 لاکھ روپے علاج", link: "https://pmhealthprogram.gov.pk", helpline: "0800-09009", date: "جاری ہے", desc: "وفاقی علاقوں کے شہریوں کے لیے منتخب ہسپتالوں میں مفت علاج کی سہولت۔" },
+            { id: 7, name: "نیا پاکستان ہاؤسنگ سکیم", prov: "وفاقی", dist: "منتخب شہر", amount: "گھر کے لیے سبسڈی", link: "https://nhaph.gov.pk", helpline: "051-9244153", date: "دسمبر 2026", desc: "کم آمدنی والے افراد کے لیے اپنے گھر کی تعمیر کے لیے مالی معاونت اور قرضے فراہم کیے جاتے ہیں۔" },
+            { id: 8, name: "سکالرشپ برائے اقلیتی طلبہ", prov: "وفاقی", dist: "تمام پاکستان", amount: "50,000 روپے سالانہ", link: "https://mora.gov.pk", helpline: "051-9207462", date: "نومبر 2026", desc: "اقلیتی مذاہب سے تعلق رکھنے والے ہونہار طلبہ کے لیے تعلیمی اخراجات کی فراہمی۔" },
+            { id: 9, name: "ای سی ٹی اے ٹریننگ پروگرام", prov: "وفاقی", dist: "تمام پاکستان", amount: "مفت کورسز + وظیفہ", link: "https://navttc.gov.pk", helpline: "0800-88866", date: "جاری ہے", desc: "نوجوانوں کو فنی مہارتیں سکھانے کے لیے مفت ڈپلومہ اور ماہانہ وظیفہ دیا جاتا ہے۔" },
+            { id: 10, name: "پی ایم رمضان ریلیف پیکیج", prov: "وفاقی", dist: "یوٹیلٹی سٹورز", amount: "آٹا، چینی پر سبسڈی", link: "https://usc.org.pk", helpline: "0800-05590", date: "رمضان 2026", desc: "رمضان المبارک میں بنیادی اشیاء خورونوش پر خصوصی رعایت فراہم کی جاتی ہے۔" },
+
+            // پنجاب (10)
+            { id: 11, name: "پنجاب سولر پینل سکیم 2026", prov: "پنجاب", dist: "تمام پنجاب", amount: "مفت 1 کلو واٹ سسٹم", link: "https://punjab.gov.pk/solar", helpline: "0800-12345", date: "30 ستمبر 2026", desc: "بجلی کے بلوں میں کمی کے لیے پنجاب حکومت کی جانب سے غریب خاندانوں کو مفت سولر پینلز دیے جا رہے ہیں۔" },
+            { id: 12, name: "پنجاب ہمت کارڈ", prov: "پنجاب", dist: "تمام پنجاب", amount: "10,500 روپے سہ ماہی", link: "https://pspa.punjab.gov.pk", helpline: "042-99232359", date: "جاری ہے", desc: "معذور افراد (خصوصی افراد) کے لیے مالی امداد اور سماجی تحفظ کا پروگرام۔" },
+            { id: 13, name: "پنجاب کسان کارڈ", prov: "پنجاب", dist: "تمام اضلاع", amount: "بلاسود قرضے", link: "https://agripunjab.gov.pk", helpline: "0800-17000", date: "دسمبر 2026", desc: "کسانوں کو کھاد، بیج اور زرعی ادویات کی خریداری کے لیے مالی امداد فراہم کی جاتی ہے۔" },
+            { id: 14, name: "پنجاب موٹر سائیکل سکیم", prov: "پنجاب", dist: "طلبہ کے لیے", amount: "آسان اقساط پر بائیک", link: "https://bikes.punjab.gov.pk", helpline: "042-111-333-222", date: "اگست 2026", desc: "یونیورسٹی کے طلبہ و طالبات کے لیے بلاسود اقساط پر الیکٹرک اور پٹرول بائیکس۔" },
+            { id: 15, name: "اپنی چھت اپنا گھر سکیم", prov: "پنجاب", dist: "تمام پنجاب", amount: "15 لاکھ روپے قرض", link: "https://acag.punjab.gov.pk", helpline: "0800-09100", date: "جاری ہے", desc: "گھر بنانے کے لیے آسان شرائط پر قرضہ جس کی واپسی معمولی اقساط میں کرنی ہوگی۔" },
+            { id: 16, name: "پنجاب ای روزگار پروگرام", prov: "پنجاب", dist: "تمام اضلاع", amount: "مفت ٹریننگ", link: "https://erozgaar.pitb.gov.pk", helpline: "042-35880062", date: "نومبر 2026", desc: "نوجوانوں کو آن لائن پیسے کمانے اور فری لانسنگ سکھانے کا سرکاری پروگرام۔" },
+            { id: 17, name: "پنجاب راشن رعایت پروگرام", prov: "پنجاب", dist: "تمام پنجاب", amount: "40% رعایت", link: "https://punjab.gov.pk", helpline: "8123", date: "جاری ہے", desc: "مستحق خاندانوں کو آٹا، دال اور گھی پر ماہانہ بڑی رعایت فراہم کی جاتی ہے۔" },
+            { id: 18, name: "پنجاب گرین ٹریکٹر سکیم", prov: "پنجاب", dist: "تمام پنجاب", amount: "6 لاکھ روپے سبسڈی", link: "https://agripunjab.gov.pk", helpline: "0800-17000", date: "اکتوبر 2026", desc: "کسانوں کو جدید کاشتکاری کے لیے سستے ٹریکٹر فراہم کرنے کی سکیم۔" },
+            { id: 19, name: "چیف منسٹر سکالرشپ", prov: "پنجاب", dist: "تمام پنجاب", amount: "مکمل تعلیمی اخراجات", link: "https://pief.punjab.gov.pk", helpline: "042-99260111", date: "جاری ہے", desc: "اعلیٰ تعلیم حاصل کرنے والے ذہین طلبہ کے لیے وظائف کا پروگرام۔" },
+            { id: 20, name: "پنجاب سکل ڈویلپمنٹ (PSDF)", prov: "پنجاب", dist: "تمام اضلاع", amount: "مفت کورس + وظیفہ", link: "https://psdf.org.pk", helpline: "0800-48620", date: "جاری ہے", desc: "مختلف ہنر سیکھنے کے لیے مفت ٹریننگ اور ماہانہ پیسے دیے جاتے ہیں۔" },
+
+            // سندھ (10)
+            { id: 21, name: "بینظیر ہری کارڈ سندھ", prov: "سندھ", dist: "تمام سندھ", amount: "زرعی امداد", link: "https://sindh.gov.pk", helpline: "021-99211462", date: "جاری ہے", desc: "سندھ کے کسانوں کو بیج اور کھاد کے لیے مالی امداد فراہم کرنے کا پروگرام۔" },
+            { id: 22, name: "سندھ پیپلز ہاؤسنگ سکیم", prov: "سندھ", dist: "سیلاب متاثرین", amount: "گھر کی تعمیر کے پیسے", link: "https://sphfc.org.pk", helpline: "021-34320011", date: "دسمبر 2026", desc: "سیلاب سے متاثرہ افراد کو پکے گھر بنانے کے لیے مالی امداد فراہم کی جا رہی ہے۔" },
+            { id: 23, name: "سندھ ایجوکیشن فاؤنڈیشن وظیفہ", prov: "سندھ", dist: "تمام سندھ", amount: "ماہانہ تعلیمی گرانٹ", link: "https://sef.org.pk", helpline: "021-99333241", date: "جاری ہے", desc: "غریب طلبہ کو نجی تعلیمی اداروں میں مفت تعلیم فراہم کرنے کا منصوبہ۔" },
+            { id: 24, name: "سندھ یوتھ سکل پروگرام", prov: "سندھ", dist: "تمام اضلاع", amount: "مفت آئی ٹی ٹریننگ", link: "https://sindh.gov.pk", helpline: "021-111-222-333", date: "جاری ہے", desc: "نوجوانوں کو جدید ٹیکنالوجی اور کمپیوٹر کورسز کروانے کی سہولت۔" },
+            { id: 25, name: "پیپلز بس سروس کارڈ", prov: "سندھ", dist: "کراچی، حیدرآباد", amount: "سستا سفر", link: "https://sindh.gov.pk", helpline: "021-99201234", date: "لائف ٹائم", desc: "شہریوں کو جدید بسوں میں سستا اور معیاری سفر فراہم کرنے کی سہولت۔" },
+            // یہاں اپنا اشتہار لگائیں (Mid-list Ad)
+            { id: 26, name: "سندھ حکومت انٹرن شپ", prov: "سندھ", dist: "گریجویٹس", amount: "25,000 روپے ماہانہ", link: "https://sindh.gov.pk", helpline: "021-99211111", date: "اگست 2026", desc: "تعلیم مکمل کرنے والے نوجوانوں کو سرکاری محکموں میں کام کا تجربہ اور وظیفہ۔" },
+            { id: 27, name: "سندھ سوشل پروٹیکشن", prov: "سندھ", dist: "تمام سندھ", amount: "ماہانہ مالی امداد", link: "https://sspa.sindh.gov.pk", helpline: "021-99251211", date: "جاری ہے", desc: "انتہائی غریب اور بے سہارا افراد کے لیے مالی معاونت کا پروگرام۔" },
+            { id: 28, name: "لیڈیز ہیلتھ ورکرز گرانٹ", prov: "سندھ", dist: "دیہی سندھ", amount: "اضافی الاؤنس", link: "https://sindhhealth.gov.pk", helpline: "021-99222444", date: "جاری ہے", desc: "صحت کے شعبے میں کام کرنے والی خواتین کے لیے مراعات۔" },
+            { id: 29, name: "سندھ سمال بزنس لون", prov: "سندھ", dist: "تمام سندھ", amount: "بلاسود قرضہ", link: "https://sindh.gov.pk", helpline: "021-99200000", date: "اکتوبر 2026", desc: "چھوٹے کاروبار چلانے والے افراد کے لیے آسان قرضے تاکہ وہ اپنا کام بڑھا سکیں۔" },
+            { id: 30, name: "سیلاب متاثرین امداد", prov: "سندھ", dist: "متاثرہ اضلاع", amount: "نقد رقم", link: "https://pdma.sindh.gov.pk", helpline: "1736", date: "جاری ہے", desc: "قدرتی آفات سے متاثرہ خاندانوں کی بحالی کے لیے ہنگامی مالی امداد۔" },
+
+            // خیبر پختونخوا (10)
+            { id: 31, name: "صحت کارڈ پلس کے پی کے", prov: "خیبر پختونخوا", dist: "تمام کے پی کے", amount: "10 لاکھ روپے سالانہ", link: "https://sehatcardplus.gov.pk", helpline: "0800-89898", date: "جاری ہے", desc: "خیبر پختونخوا کے تمام خاندانوں کے لیے مفت ہسپتال علاج کی سہولت۔" },
+            { id: 32, name: "کے پی کے انصاف فوڈ کارڈ", prov: "خیبر پختونخوا", dist: "تمام اضلاع", amount: "ماہانہ راشن", link: "https://kpsocialprotection.gov.pk", helpline: "091-9223501", date: "جاری ہے", desc: "غریب خاندانوں کو مفت آٹا اور اشیاء خورونوش کی فراہمی کے لیے کارڈ۔" },
+            { id: 33, name: "کے پی کے یوتھ لون", prov: "خیبر پختونخوا", dist: "نوجوان", amount: "بلاسود قرضے", link: "https://kpyouth.gov.pk", helpline: "091-9213835", date: "ستمبر 2026", desc: "اپنا کاروبار شروع کرنے کے لیے خیبر پختونخوا حکومت کے آسان قرضے۔" },
+            { id: 34, name: "پشاور بی آر ٹی کارڈ", prov: "خیبر پختونخوا", dist: "پشاور", amount: "سفر پر رعایت", link: "https://zuptc.pk", helpline: "091-111-477-477", date: "لائف ٹائم", desc: "بی آر ٹی پشاور میں طلبہ اور معذور افراد کے لیے مفت یا سستا سفر۔" },
+            { id: 35, name: "کے پی کے تعلیمی وظیفہ", prov: "خیبر پختونخوا", dist: "تمام اضلاع", amount: "نقد رقم", link: "https://kp.gov.pk", helpline: "091-9210000", date: "نومبر 2026", desc: "سرکاری سکولوں میں زیر تعلیم طالبات کے لیے حوصلہ افزائی کی رقم۔" },
+            { id: 36, name: "گرین خیبر پختونخوا", prov: "خیبر پختونخوا", dist: "تمام اضلاع", amount: "مفت پودے اور زمین", link: "https://kp.gov.pk", helpline: "091-9211111", date: "جاری ہے", desc: "شجرکاری اور ماحولیات کے تحفظ کے لیے حکومتی ترغیبات۔" },
+            { id: 37, name: "کے پی کے سکل ڈویلپمنٹ", prov: "خیبر پختونخوا", dist: "تمام اضلاع", amount: "مفت ٹریننگ", link: "https://kptevta.gov.pk", helpline: "091-9217112", date: "جاری ہے", desc: "فنی اور پیشہ ورانہ تعلیم کے ذریعے نوجوانوں کو ہنر مند بنانا۔" },
+            { id: 38, name: "خیبر پختونخوا لائیوسٹاک", prov: "خیبر پختونخوا", dist: "دیہی اضلاع", amount: "مفت جانور / قرضہ", link: "https://kp.gov.pk", helpline: "091-9210272", date: "اکتوبر 2026", desc: "مال مویشی پالنے والے کسانوں کے لیے مالی معاونت کا پروگرام۔" },
+            { id: 39, name: "کے پی کے رینٹل ہاؤسنگ", prov: "خیبر پختونخوا", dist: "منتخب شہر", amount: "کرایہ سبسڈی", link: "https://kp.gov.pk", helpline: "091-9212111", date: "دسمبر 2026", desc: "سرکاری ملازمین اور غریب طبقے کے لیے رہائشی سہولیات۔" },
+            { id: 40, name: "فاٹا انضمام پیکج", prov: "خیبر پختونخوا", dist: "ضم شدہ اضلاع", amount: "خصوصی ترقیاتی فنڈز", link: "https://kp.gov.pk", helpline: "091-111-000-000", date: "جاری ہے", desc: "سابقہ فاٹا کے علاقوں کی ترقی اور عوامی سہولیات کی بحالی کا پروگرام۔" },
+
+            // بلوچستان (10)
+            { id: 41, name: "بلوچستان ہیلتھ کارڈ", prov: "بلوچستان", dist: "تمام بلوچستان", amount: "10 لاکھ روپے علاج", link: "https://balochistan.gov.pk", helpline: "081-9201211", date: "جاری ہے", desc: "بلوچستان کے شہریوں کے لیے ملک بھر کے ہسپتالوں میں مفت علاج۔" },
+            { id: 42, name: "بلوچستان یوتھ سکلز", prov: "بلوچستان", dist: "تمام اضلاع", amount: "مفت ڈپلومہ", link: "https://balochistan.gov.pk", helpline: "081-9202222", date: "جاری ہے", desc: "نوجوانوں کو مائننگ، آئی ٹی اور زراعت میں فنی تربیت دی جاتی ہے۔" },
+            { id: 43, name: "گوادر تعلیمی وظیفہ", prov: "بلوچستان", dist: "گوادر", amount: "مکمل وظیفہ", link: "https://balochistan.gov.pk", helpline: "081-9203333", date: "اکتوبر 2026", desc: "گوادر کے طلبہ کے لیے اعلیٰ تعلیم کے اخراجات وفاق اور صوبہ اٹھائے گا۔" },
+            { id: 44, name: "بلوچستان گرین بس سروس", prov: "بلوچستان", dist: "کوئٹہ", amount: "سستا سفر", link: "https://balochistan.gov.pk", helpline: "081-111-222-333", date: "جاری ہے", desc: "کوئٹہ کے شہریوں کے لیے سستی اور جدید ٹرانسپورٹ کی سہولت۔" },
+            { id: 45, name: "بلوچستان کسان سپورٹ", prov: "بلوچستان", dist: "زرعی اضلاع", amount: "سولر ٹیوب ویل", link: "https://balochistan.gov.pk", helpline: "081-9211111", date: "دسمبر 2026", desc: "زمینداروں کو ٹیوب ویل سولر پر منتقل کرنے کے لیے بڑی سبسڈی۔" },
+            { id: 46, name: "لائیوسٹاک کارڈ بلوچستان", prov: "بلوچستان", dist: "تمام اضلاع", amount: "مالی امداد", link: "https://balochistan.gov.pk", helpline: "081-9201111", date: "جاری ہے", desc: "بھیڑ بکریاں پالنے والوں کے لیے سستی خوراک اور ادویات کی فراہمی۔" },
+            { id: 47, name: "بلوچستان سوشل ویلفیئر", prov: "بلوچستان", dist: "تمام بلوچستان", amount: "ماہانہ وظیفہ", link: "https://balochistan.gov.pk", helpline: "081-9202111", date: "جاری ہے", desc: "بیواؤں اور یتیم بچوں کی کفالت کے لیے حکومتی امداد۔" },
+            { id: 48, name: "کوسٹل ہائی وے ڈویلپمنٹ", prov: "بلوچستان", dist: "ساحلی علاقے", amount: "کاروباری گرانٹ", link: "https://balochistan.gov.pk", helpline: "081-9203111", date: "جاری ہے", desc: "ساحلی علاقوں کے ماہی گیروں کے لیے کشتیوں اور جال کی خریداری میں مدد۔" },
+            { id: 49, name: "بلوچستان لیپ ٹاپ سکیم", prov: "بلوچستان", dist: "یونیورسٹی طلبہ", amount: "مفت لیپ ٹاپ", link: "https://balochistan.gov.pk", helpline: "081-9204111", date: "نومبر 2026", desc: "بلوچستان کی یونیورسٹیوں میں پڑھنے والے ذہین طلبہ کے لیے کمپیوٹرز۔" },
+            { id: 50, name: "بلوچستان سپورٹس فنڈ", prov: "بلوچستان", dist: "کھلاڑیوں کے لیے", amount: "تربیتی فنڈز", link: "https://balochistan.gov.pk", helpline: "081-9205111", date: "جاری ہے", desc: "قومی سطح پر کھیلنے والے بلوچستان کے کھلاڑیوں کے لیے ماہانہ وظیفہ۔" }
+        ];
+
+        const facilitiesData = [
+            { name: "راشن کارڈ سکیم", helpline: "8123", link: "https://punjab.gov.pk", desc: "کم آمدنی والے خاندانوں کو آٹا، گھی اور چینی پر ماہانہ 40 فیصد تک رعایت ملتی ہے۔ اس کے لیے آپ 8123 پر اپنا شناختی کارڈ نمبر ایس ایم ایس کر کے اہلیت چیک کر سکتے ہیں۔" },
+            { name: "سولر پینل سکیم", helpline: "0800-12345", link: "https://punjab.gov.pk/solar", desc: "حکومت پاکستان کی جانب سے بجلی کے بحران پر قابو پانے کے لیے مفت یا انتہائی سستے سولر سسٹم فراہم کیے جا رہے ہیں۔ یہ سکیم خاص طور پر 200 یونٹ سے کم بجلی استعمال کرنے والوں کے لیے ہے۔" },
+            { name: "زرعی سکیمیں (کسان کارڈ)", helpline: "0800-17000", link: "https://agripunjab.gov.pk", desc: "کسانوں کو بلاسود قرضے، سستے ٹریکٹر اور جدید زرعی آلات فراہم کیے جاتے ہیں تاکہ ملک میں غذائی تحفظ یقینی بنایا جا سکے۔" },
+            { name: "صحت کارڈ سکیم", helpline: "0800-09009", link: "https://sehatcardplus.gov.pk", desc: "پاکستان کے تمام رجسٹرڈ شہریوں کے لیے 10 لاکھ روپے تک کا مفت علاج منتخب نجی اور سرکاری ہسپتالوں میں دستیاب ہے۔" },
+            { name: "تعلیمی وظائف", helpline: "0800-26477", link: "https://bisp.gov.pk", desc: "پرائمری سے لے کر یونیورسٹی تک کے طلبہ کے لیے ماہانہ اور سالانہ وظائف کی فراہمی تاکہ کوئی بچہ پیسے کی کمی کی وجہ سے تعلیم نہ چھوڑے۔" }
+        ];
+
+        let currentFilter = "تمام";
+
+        // پیج تبدیل کرنے کا فنکشن
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            if(element) element.classList.add('active');
+            
+            window.scrollTo(0,0);
+            
+            if(pageId === 'schemes') renderSchemes();
+            if(pageId === 'facilities') renderFacilities();
+            if(pageId === 'home') renderFeatured();
+        }
+
+        // نمایاں سکیم ہوم پیج پر دکھانا
+        function renderFeatured() {
+            const featured = schemesData[0];
+            document.getElementById('featuredScheme').innerHTML = `
+                <div class="featured-badge">آج کی خاص سکیم</div>
+                <h2 style="font-size:18px;">${featured.name}</h2>
+                <div class="scheme-meta">
+                    <span class="meta-tag">${featured.prov}</span>
+                    <span class="meta-tag">💰 ${featured.amount}</span>
+                </div>
+                <p class="scheme-desc">${featured.desc.substring(0, 100)}...</p>
+                <button class="btn-green" style="width:100%" onclick="showPage('schemes')">تفصیلات دیکھیں</button>
+            `;
+        }
+
+        // سکیمیں لوڈ کرنا
+        function renderSchemes() {
+            const list = document.getElementById('schemesList');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = schemesData.filter(s => {
+                const matchesFilter = (currentFilter === "تمام" || s.prov === currentFilter);
+                const matchesSearch = (s.name.toLowerCase().includes(searchVal) || s.prov.toLowerCase().includes(searchVal));
+                return matchesFilter && matchesSearch;
+            });
+
+            list.innerHTML = '';
+            filtered.forEach((s, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3 style="font-size:17px; color:var(--black);">${s.name}</h3>
+                    <div class="scheme-meta">
+                        <span class="meta-tag">📍 ${s.prov}</span>
+                        <span class="meta-tag">💵 ${s.amount}</span>
+                        <span class="meta-tag">📅 ${s.date}</span>
+                    </div>
+                    <p class="scheme-desc">${s.desc}</p>
+                    <div style="margin-top:15px; display:flex; gap:10px;">
+                        <a href="${s.link}" target="_blank" class="btn-green" style="flex:2; font-size:14px; padding:10px;">سرکاری ویب سائٹ</a>
+                        <button class="helpline-btn" onclick="alert('ہیلپ لائن نمبر: ${s.helpline}')">ہیلپ لائن</button>
+                    </div>
+                `;
+                list.appendChild(card);
+
+                // ایڈ کے لیے جگہ (سکیم 25 کے بعد)
+                if(index === 24) {
+                    const ad = document.createElement('div');
+                    ad.className = 'ad-space';
+                    ad.innerHTML = '<p style="color:#ccc">اشتہار کی جگہ (Ad Space)</p>';
+                    list.appendChild(ad);
+                }
+            });
+        }
+
+        // سہولیات لوڈ کرنا
+        function renderFacilities() {
+            const list = document.getElementById('facilitiesList');
+            list.innerHTML = '';
+            facilitiesData.forEach(f => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${f.name}</h3>
+                    <p class="scheme-desc">${f.desc}</p>
+                    <p><strong>ہیلپ لائن:</strong> ${f.helpline}</p>
+                    <a href="${f.link}" target="_blank" class="btn-green" style="margin-top:10px;">مزید معلومات</a>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // فلٹر سیٹ کرنا
+        function setFilter(prov, btn) {
+            currentFilter = prov;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSchemes();
+        }
+
+        // سرچ فنکشن
+        function filterSchemes() {
+            renderSchemes();
+        }
+
+        // ابتدائی لوڈنگ
+        window.onload = () => {
+            renderFeatured();
+        };
+    </script>
+</body>
+</html>
